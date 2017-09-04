@@ -85,7 +85,7 @@ class MyTestCase(unittest.TestCase):
         normalize_data_1 = [[2.0,2.0,2.0,2.0,[0,1,0]]]
         normalize_data_2 = [[1.0,1.0,1.0,1.0,[1,0,0]]]
         self.assertEqual(file_manager.get_train_data(),normalize_data_1)
-        #self.assertEqual(file_manager.get_test_data(),normalize_data_2)
+        self.assertEqual(file_manager.get_test_data(),normalize_data_2)
 
 
 if __name__ == '__main__':

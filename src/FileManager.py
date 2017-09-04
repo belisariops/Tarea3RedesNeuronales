@@ -15,9 +15,7 @@ class FileManager:
         self.data = parser.parse_iris_data(self.data)
         x = 0
         for i in range(len(self.data)):
-            #print(self.data[i][0:len(self.data[i])-1])
             normalize_data = list(map(normalize,self.data[i][0:len(self.data[i])-1]))
-            #print(normalize_data)
             normalize_data.append(self.data[i][-1])
             self.data[i] = normalize_data
             if x % 2 == 0:

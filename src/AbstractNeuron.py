@@ -52,9 +52,9 @@ class AbstractNeuron(ABC):
     def setWeightInPosition(self,i,value):
         self.weights[i] += value
 
-    def updateWeights(self):
+    def updateWeights(self,inputs):
         for i in range (len(self.weights)):
-            self.weights[i] += (self.C * self.delta * self.inputs[i])
+            self.weights[i] += (self.C * self.delta * inputs[i])
 
     def updateBias(self):
         self.bias += (self.C * self.delta)

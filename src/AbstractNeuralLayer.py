@@ -21,11 +21,13 @@ class AbstractNeuralLayer(ABC):
 
     
 
-    def forwardPropagation(self):
+    def forwardPropagation(self,inputs):
+        outputs = []
         for neuron in self.neuron_array:
-            neuron.updateWeights()
+            neuron.updateWeights(inputs)
             neuron.updateBias()
-        self.next_layer.forwardPropagation()
+            outputs.append(neuron.output)
+        self.next_layer.forwardPropagation(outputs)
 
 
     def transferDerivative(self,output):

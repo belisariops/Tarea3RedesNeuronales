@@ -82,8 +82,8 @@ class NeuralNetwork:
         last_layer.setPreviousLayer(current_layer)
         self.output_layer = last_layer
 
-    def forwardPropagation(self):
-        self.first_layer.forwardPropagation()
+    def forwardPropagation(self,input):
+        self.first_layer.forwardPropagation(input)
 
     def train(self, numberOfEpochs, data, test_data):
         for i in range(numberOfEpochs):
@@ -93,16 +93,15 @@ class NeuralNetwork:
                 output_last_layer = self.feed(input_data)
                 expected_output = set[-1:][0]
                 self.output_layer.backPropagation(expected_output)
-                self.forwardPropagation()
+                self.forwardPropagation(input_data)
                 # print(expected_output)
                 # print(output_last_layer)
                 self.error += (np.power(LA.norm(np.subtract(expected_output, output_last_layer)), 2)/len(data))
-            x = self.getGuessRatio(test_data)
-            print(x)
-            self.precisionY.append(x)
-            self.precisionX.append(i)
-            self.error_plotX.append(i)
-            self.error_plotY.append(self.error)
+            # x = self.getGuessRatio(test_data)
+            # self.precisionY.append(x)
+            # self.precisionX.append(i)
+            # self.error_plotX.append(i)
+            # self.error_plotY.append(self.error)
 
             # error = expected_output - output_last_layer
             # delta = error * (output_last_layer * (1.0 - output_last_layer))
