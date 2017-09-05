@@ -12,32 +12,32 @@ def main():
     file_manager = FileManager()
     file_manager.load_file("../Datasets/iris.data")
     train_data = file_manager.get_train_data()
-    #neural_network = NeuralNetwork(4)
-    #neural_network.setRandomLayers(1, 6, 8, 3)
-    first_layer = FirstNeuralLayer()
-    output_layer = LastNeuralLayer()
-    hidden1 = SigmoidNeuron()
-    hidden1.weights = [0.1,0.2]
-    hidden1.setBias(0.1)
-    hidden2 = SigmoidNeuron()
-    hidden2.weights = [0.2,0.3]
-    hidden2.setBias(0.1)
-
-    out = SigmoidNeuron()
-    out.weights = [0.3,0.4]
-    out.setBias(0.1)
-    first_layer.neuron_array = [hidden1, hidden2]
-    output_layer.neuron_array = [out]
-
-    first_layer.setNextLayer(output_layer)
-    output_layer.setPreviousLayer(first_layer)
-
-
-    neural_network = NeuralNetwork(2)
-    neural_network.first_layer = first_layer
-    neural_network.output_layer = output_layer
-
-    neural_network.train(1,[[0.9,0.8,[1]]],[[0,1,[0]]])
+    neural_network = NeuralNetwork(4)
+    neural_network.setRandomLayers(1, 4, 4, 3)
+    # first_layer = FirstNeuralLayer()
+    # output_layer = LastNeuralLayer()
+    # hidden1 = SigmoidNeuron()
+    # hidden1.weights = [0.1,0.2]
+    # hidden1.setBias(0.1)
+    # hidden2 = SigmoidNeuron()
+    # hidden2.weights = [0.2,0.3]
+    # hidden2.setBias(0.1)
+    #
+    # out = SigmoidNeuron()
+    # out.weights = [0.3,0.4]
+    # out.setBias(0.1)
+    # first_layer.neuron_array = [hidden1, hidden2]
+    # output_layer.neuron_array = [out]
+    #
+    # first_layer.setNextLayer(output_layer)
+    # output_layer.setPreviousLayer(first_layer)
+    #
+    #
+    # neural_network = NeuralNetwork(2)
+    # neural_network.first_layer = first_layer
+    # neural_network.output_layer = output_layer
+    #
+    # neural_network.train(1,[[0.9,0.8,[1]]],[[0,1,[0]]])
 
     # first_layer = FirstNeuralLayer()
     # learningRate = 0.1
@@ -110,14 +110,14 @@ def main():
     # myfunc = lambda x, y: 1 if (x != y) else 0
     # output = neural_network.feed([1, 1])
     #print(output)
-    #test_data = file_manager.get_test_data()
-    #neural_network.train(1000, train_data,test_data)
+    test_data = file_manager.get_test_data()
+    neural_network.train(300, train_data,test_data)
     #print(myfunc(0, 0))
 
-    #output = neural_network.feed(test_data[0][0:5])
-    #print(output)
-    #print("Test data ratio: {0}".format(neural_network.getGuessRatio(test_data)))
-    #neural_network.plotErrorData()
+    output = neural_network.feed(test_data[0][0:5])
+    print(output)
+    print("Test data ratio: {0}".format(neural_network.getGuessRatio(test_data)))
+    neural_network.plotErrorData()
     x =2
 
 

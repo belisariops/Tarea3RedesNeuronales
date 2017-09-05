@@ -10,6 +10,6 @@ class InnerNeuralLayer(AbstractNeuralLayer):
         outputs = []
         for neuron in self.neuron_array:
             neuron.setInputsList(inputs)
-            neuron.output = neuron.getOutput()
+            neuron.output = neuron.getOutput(inputs)
             outputs.append(neuron.output)
         return self.next_layer.getOutputs(outputs)

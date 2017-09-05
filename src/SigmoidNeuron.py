@@ -21,7 +21,6 @@ class SigmoidNeuron(AbstractNeuron):
             z = z + self.weights[i] * inputs[i]
         z = z + self.bias
         self.output = self.activation_function(z)
-        print("weights: {0} , inputs: {1}, bias: {2}, result: {3}, sigmoid: {4}".format(self.weights,inputs,self.bias,z,self.output))
         return self.output
 
     def setRandomParameters(self):
