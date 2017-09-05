@@ -11,10 +11,9 @@ from src.SigmoidNeuron import SigmoidNeuron
 class MyTestCase(unittest.TestCase):
     def test_neuron(self):
         neuron = SigmoidNeuron()
-        neuron.inputs = [1, -1]
         neuron.weights = [0.5, 0.5]
         neuron.setBias(0)
-        self.assertEqual(neuron.getOutput(), 0.5)
+        self.assertEqual(neuron.getOutput([1, -1]), 0.5)
 
     def build_network(self):
         network = NeuralNetwork(2)
@@ -54,7 +53,7 @@ class MyTestCase(unittest.TestCase):
     def test_OR(self):
         network = self.build_network()
         data = [[0, 0, [1,0]], [0, 1,[0,1]], [1, 0,[0,1]], [1, 1, [0,1]]]  # OR data
-        network.train(100, data, [[0, 0, [1, 0]]])
+        network.train(2000, data)
         output = network.feed([0, 1, [0, 1]])
         interpreter_output = network.interp(output)
         self.assertEqual(interpreter_output,[0,1])
@@ -62,7 +61,7 @@ class MyTestCase(unittest.TestCase):
     def test_XOR(self):
         network = self.build_network()
         data = [[0, 0, [1, 0]], [0, 1, [0, 1]], [1, 0, [0, 1]], [1, 1, [1, 0]]]  # XOR data
-        network.train(200, data, [[0, 0, [1, 0]]])
+        network.train(2000, data)
         output = network.feed([1, 1, [1, 0]])
         interpreter_output = network.interp(output)
         self.assertEqual(interpreter_output, [1, 0])
