@@ -1,4 +1,4 @@
-from src.AbstractNeuralLayer import AbstractNeuralLayer
+from AbstractNeuralLayer import AbstractNeuralLayer
 
 
 

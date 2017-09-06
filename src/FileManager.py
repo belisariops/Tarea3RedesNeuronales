@@ -1,4 +1,4 @@
-from src.Parser import Parser
+from Parser import Parser
 
 
 class FileManager:

@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.SigmoidNeuron import SigmoidNeuron
+from SigmoidNeuron import SigmoidNeuron
 
 
 class AbstractNeuralLayer(ABC):

@@ -4,9 +4,9 @@ import matplotlib.pylab as plt
 import numpy as np
 from numpy import linalg as LA
 
-from src.FirstNeuralLayer import FirstNeuralLayer
-from src.InnerNeuralLayer import InnerNeuralLayer
-from src.LastNeuralLayer import LastNeuralLayer
+from FirstNeuralLayer import FirstNeuralLayer
+from InnerNeuralLayer import InnerNeuralLayer
+from LastNeuralLayer import LastNeuralLayer
 
 
 class NeuralNetwork:

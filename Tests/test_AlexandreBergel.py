@@ -1,5 +1,4 @@
 import unittest
-
 from src.FirstNeuralLayer import FirstNeuralLayer
 from src.LastNeuralLayer import LastNeuralLayer
 from src.NeuralNetwork import NeuralNetwork

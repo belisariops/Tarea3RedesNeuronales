@@ -1,5 +1,7 @@
 # How to run:
-    using Python 3.6 excecute main.py in the src directory, tests can be run with the Tests/Test.py file.
+    using Python 3.6 excecute "python main.py" in the src directory, tests can be run with "python -m unittest discover -s Tests"
+     in the parent directory, some OS may have a problem with the working directory, an IDE is recommended.
+    
 
 #Repository:
     https://github.com/belisariops/Tarea1RedesNeuronales
