@@ -22,6 +22,9 @@ class NeuralNetwork:
         self.precisionX = []
         self.precisionY = []
 
+    def setLearningRate(self,learning_rate):
+        self.first_layer.setLearningRate(learning_rate)
+
     def createLayer(self, neural_layer, previous_layer):
         neural_layer.buildRandomLayer(random.randint(self.min_neurons_per_layer, self.max_neurons_per_layer))
         if previous_layer is None:
@@ -50,7 +53,7 @@ class NeuralNetwork:
         neural_layer.buildRandomLayer(number_of_outputs)
         neural_layer.setPreviousLayer(previous_layer)
         previous_layer.setNextLayer(neural_layer)
-        neural_layer.setRandomWeights(len(neural_layer.previous_layer.neuron_array), -1, 3)
+        neural_layer.setRandomWeights(len(neural_layer.previous_layer.neuron_array), -1, 2)
 
         self.output_layer = neural_layer
 

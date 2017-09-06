@@ -19,7 +19,10 @@ class AbstractNeuralLayer(ABC):
             neuron.setRandomParameters()
             self.neuron_array.append(neuron)
 
-    
+    def setLearningRate(self,learning_rate):
+        for neuron in self.neuron_array:
+            neuron.setC(learning_rate)
+        self.next_layer.setLearningRate(learning_rate)
 
     def forwardPropagation(self,inputs):
         outputs = []

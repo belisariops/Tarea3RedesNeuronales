@@ -10,7 +10,7 @@ class SigmoidNeuron(AbstractNeuron):
     def __init__(self):
         super(SigmoidNeuron, self).__init__()
         self.activation_function = lambda z: (1.0 / (1.0 + exp(-z)))
-        self.C = 0.03
+        self.C = 0.05
         self.output = 0
         self.delta = 0
         self.bias = random.uniform(0, 3)
@@ -24,7 +24,7 @@ class SigmoidNeuron(AbstractNeuron):
         return self.output
 
     def setRandomParameters(self):
-        self.setC(0.03)
+        self.setC(0.05)
         self.setBias(random.uniform(1, 3))
 
 

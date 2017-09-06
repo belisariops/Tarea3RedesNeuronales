@@ -1,5 +1,5 @@
-import datetime
 import matplotlib.pylab as plt
+import numpy as np
 
 from src.FileManager import FileManager
 from src.NeuralNetwork import NeuralNetwork
@@ -13,15 +13,19 @@ def main():
     train_data = file_manager.get_train_data()
     test_data = file_manager.get_test_data()
 
+    number_of_epochs = 2000
 
     #Train and Plot results of the dataset
-    dataset_prediction(train_data,test_data)
+    dataset_prediction(train_data,test_data,number_of_epochs)
 
     #Plot Hidden Layers v/s Precision Rate
     #plot_hidden_layers_vs_precision_rate(train_data,test_data)
 
     #Plot mean time of 100 epochs
     #plot_time_vs_epochs(train_data,test_data)
+
+    #Plot learning rate v/s precision
+    #plot_learning_rate_vs_precision(train_data,test_data)
 
 def build_network():
     # Build Neural Network
@@ -30,12 +34,12 @@ def build_network():
     return neural_network
 
 
-def dataset_prediction(train_data,test_data):
+def dataset_prediction(train_data,test_data,number_of_epochs):
     #Build neural network
     neural_network = build_network()
 
     # Train Network
-    neural_network.train(1000, train_data, test_data)
+    neural_network.train(number_of_epochs, train_data, test_data)
 
     # Assert Ratio
     print("Test data ratio: {0}".format(neural_network.getGuessRatio(test_data)))
@@ -55,16 +59,8 @@ def plot_hidden_layers_vs_precision_rate(train_data,test_data):
         #Train Network
         neural_network.train(1000,train_data)
 
+        precision_rates.append(getPrecision(neural_network,test_data))
 
-        total = float(len(test_data))
-        correct_guesses = 0
-        for data in test_data:
-            guess = neural_network.interp(neural_network.feed(data[0:len(data)]))
-            if guess == data[len(data) - 1]:
-                correct_guesses += 1
-        precision = correct_guesses / total
-
-        precision_rates.append(precision)
 
     #Plot
     plt.figure()
@@ -105,10 +101,34 @@ def plot_time_vs_epochs(train_data,test_data):
 
 
 
-def plot_learning_rate_vs_precision():
-    pass
+def plot_learning_rate_vs_precision(train_data,test_data):
+    learning_rates = np.linspace(0.01,3,20)
+    precision = []
+    for rate in learning_rates:
+        neural_network = build_network()
+        neural_network.setLearningRate(rate)
+        neural_network.train(10,train_data)
+        precision.append(getPrecision(neural_network,test_data))
+
+    # Plot
+    plt.figure()
+    plt.title("Learning Rate v/s Precision", fontsize=20)
+    plt.xlabel('Learning Rate')
+    plt.ylabel('Precision')
+    plt.plot(learning_rates,precision)
+    plt.show()
 
 
+def getPrecision(neural_network,test_data):
+    total = float(len(test_data))
+    correct_guesses = 0
+    for data in test_data:
+        guess = neural_network.interp(neural_network.feed(data[0:len(data)]))
+        if guess == data[len(data) - 1]:
+            correct_guesses += 1
+    precision = correct_guesses / total
+
+    return precision
 
 if __name__ == '__main__':
     main()

@@ -23,3 +23,7 @@ class LastNeuralLayer(AbstractNeuralLayer):
         for neuron in self.neuron_array:
             neuron.updateWeights(inputs)
             neuron.updateBias()
+
+    def setLearningRate(self,learning_rate):
+        for neuron in self.neuron_array:
+            neuron.setC(learning_rate)
