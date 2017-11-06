@@ -61,7 +61,7 @@ class MyTestCase(unittest.TestCase):
     def test_XOR(self):
         network = self.build_network()
         data = [[0, 0, [1, 0]], [0, 1, [0, 1]], [1, 0, [0, 1]], [1, 1, [1, 0]]]  # XOR data
-        network.train(2000, data)
+        network.train(20000, data)
         output = network.feed([1, 1, [1, 0]])
         interpreter_output = network.interp(output)
         self.assertEqual(interpreter_output, [1, 0])
