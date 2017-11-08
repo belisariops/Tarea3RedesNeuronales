@@ -6,29 +6,36 @@ from NeuralNetwork import NeuralNetwork
 from Timer import Timer
 from random import shuffle
 
+from src.GeneticFixedToplogy import GeneticFixedTopology
+
+
 def main():
     # Parse data set
     file_manager = FileManager()
     file_manager.load_file("../Datasets/iris.data")
     train_data = file_manager.get_train_data()
     test_data = file_manager.get_test_data()
-
+    print(train_data)
     number_of_epochs = 2000
 
-    #Training data can be shuffled
-    #shuffle(train_data)
+    # Training data can be shuffled
+    # shuffle(train_data)
 
-    #Train and Plot results of the dataset
-    dataset_prediction(train_data,test_data,number_of_epochs)
 
-    #Plot Hidden Layers v/s Precision Rate
-    #plot_hidden_layers_vs_precision_rate(train_data,test_data)
+    genetic = GeneticFixedTopology(100, 0.8)
 
-    #Plot mean time of 1000 epochs
-    #plot_time_vs_epochs(train_data,test_data)
+    # Train and Plot results of the dataset
+    dataset_prediction(train_data, test_data, number_of_epochs)
 
-    #Plot learning rate v/s precision
-    #plot_learning_rate_vs_precision(train_data,test_data)
+    # Plot Hidden Layers v/s Precision Rate
+    # plot_hidden_layers_vs_precision_rate(train_data,test_data)
+
+    # Plot mean time of 1000 epochs
+    # plot_time_vs_epochs(train_data,test_data)
+
+    # Plot learning rate v/s precision
+    # plot_learning_rate_vs_precision(train_data,test_data)
+
 
 def build_network():
     # Build Neural Network
@@ -37,8 +44,8 @@ def build_network():
     return neural_network
 
 
-def dataset_prediction(train_data,test_data,number_of_epochs):
-    #Build neural network
+def dataset_prediction(train_data, test_data, number_of_epochs):
+    # Build neural network
     neural_network = build_network()
 
     # Train Network
@@ -46,11 +53,12 @@ def dataset_prediction(train_data,test_data,number_of_epochs):
 
     # Assert Ratio
     print("Test data ratio: {0}".format(neural_network.getGuessRatio(test_data)))
-
+    print(neural_network.feed(test_data[0]))
     # Plot Data Info
     neural_network.plotErrorData()
 
-def plot_hidden_layers_vs_precision_rate(train_data,test_data):
+
+def plot_hidden_layers_vs_precision_rate(train_data, test_data):
     hidden_layers = []
     precision_rates = []
     for i in range(20):
@@ -59,13 +67,12 @@ def plot_hidden_layers_vs_precision_rate(train_data,test_data):
         neural_network = NeuralNetwork(4)
         neural_network.setRandomLayers(i, 8, 8, 3)
 
-        #Train Network
-        neural_network.train(1000,train_data)
+        # Train Network
+        neural_network.train(1000, train_data)
 
-        precision_rates.append(getPrecision(neural_network,test_data))
+        precision_rates.append(getPrecision(neural_network, test_data))
 
-
-    #Plot
+    # Plot
     plt.figure()
     plt.title("Hidden Layers v/s Precision Rate", fontsize=20)
     plt.xlabel('Hidden Layers')
@@ -74,7 +81,7 @@ def plot_hidden_layers_vs_precision_rate(train_data,test_data):
     plt.show()
 
 
-def plot_time_vs_epochs(train_data,test_data):
+def plot_time_vs_epochs(train_data, test_data):
     timer = Timer()
     number_epochs = []
     time = []
@@ -82,8 +89,8 @@ def plot_time_vs_epochs(train_data,test_data):
     # Build Neural Network
     neural_network = build_network()
 
-    #200 runs of 100 epochs each
-    for i in range (100):
+    # 200 runs of 100 epochs each
+    for i in range(100):
         number_epochs.append(i)
         timer.start()
         for j in range(1000):
@@ -99,31 +106,30 @@ def plot_time_vs_epochs(train_data,test_data):
     plt.title("Time Taken in 1000 Epochs", fontsize=20)
     plt.xlabel('Number of Experiment')
     plt.ylabel('Time')
-    plt.scatter(number_epochs,time,color='blue')
+    plt.scatter(number_epochs, time, color='blue')
     plt.axhline(y=mean_time, color='r', linestyle='-')
     plt.show()
 
 
-
-def plot_learning_rate_vs_precision(train_data,test_data):
-    learning_rates = np.linspace(0.05,2,20)
+def plot_learning_rate_vs_precision(train_data, test_data):
+    learning_rates = np.linspace(0.05, 2, 20)
     precision = []
     for rate in learning_rates:
         neural_network = build_network()
         neural_network.setLearningRate(rate)
-        neural_network.train(1000,train_data)
-        precision.append(getPrecision(neural_network,test_data))
+        neural_network.train(1000, train_data)
+        precision.append(getPrecision(neural_network, test_data))
 
     # Plot
     plt.figure()
     plt.title("Learning Rate v/s Precision", fontsize=20)
     plt.xlabel('Learning Rate')
     plt.ylabel('Precision')
-    plt.plot(learning_rates,precision)
+    plt.plot(learning_rates, precision)
     plt.show()
 
 
-def getPrecision(neural_network,test_data):
+def getPrecision(neural_network, test_data):
     total = float(len(test_data))
     correct_guesses = 0
     for data in test_data:
@@ -133,6 +139,7 @@ def getPrecision(neural_network,test_data):
     precision = correct_guesses / total
 
     return precision
+
 
 if __name__ == '__main__':
     main()

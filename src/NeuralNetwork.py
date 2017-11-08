@@ -4,9 +4,11 @@ import matplotlib.pylab as plt
 import numpy as np
 from numpy import linalg as LA
 
-from FirstNeuralLayer import FirstNeuralLayer
-from InnerNeuralLayer import InnerNeuralLayer
-from LastNeuralLayer import LastNeuralLayer
+from src.FirstNeuralLayer import FirstNeuralLayer
+from src.InnerNeuralLayer import InnerNeuralLayer
+from src.LastNeuralLayer import LastNeuralLayer
+
+from src.SigmoidNeuron import SigmoidNeuron
 
 
 class NeuralNetwork:
@@ -21,8 +23,36 @@ class NeuralNetwork:
         self.error_plotY = []
         self.precisionX = []
         self.precisionY = []
+        self.number_of_layers = 0
 
-    def setLearningRate(self,learning_rate):
+    def buildLayer(self, layer, num_neurons):
+        for index in range(num_neurons):
+            neuron = SigmoidNeuron()
+            layer.neuron_array.append(neuron)
+
+    def buildFixed(self, layers):
+        if len(layers) < 1:
+            raise ValueError('La red no tiene ningun elemento')
+
+        first_layer = FirstNeuralLayer()
+        self.buildLayer(first_layer, layers[0])
+        last_layer = LastNeuralLayer()
+        self.buildLayer(last_layer, layers[-1])
+        current_layer = first_layer
+        self.number_of_layers += 2
+        for num_neurons in layers[1:-1]:
+            inner_layer = InnerNeuralLayer()
+            self.number_of_layers += 1
+            self.buildLayer(inner_layer, num_neurons)
+            current_layer.setNextLayer(inner_layer)
+            inner_layer.setPreviousLayer(current_layer)
+            current_layer = inner_layer
+        current_layer.setNextLayer(last_layer)
+        last_layer.setPreviousLayer(current_layer)
+        self.first_layer = first_layer
+        self.output_layer = last_layer
+
+    def setLearningRate(self, learning_rate):
         self.first_layer.setLearningRate(learning_rate)
 
     def createLayer(self, neural_layer, previous_layer):
@@ -85,10 +115,10 @@ class NeuralNetwork:
         last_layer.setPreviousLayer(current_layer)
         self.output_layer = last_layer
 
-    def forwardPropagation(self,input):
+    def forwardPropagation(self, input):
         self.first_layer.forwardPropagation(input)
 
-    def train(self, numberOfEpochs, data, test_data = None):
+    def train(self, numberOfEpochs, data, test_data=None):
         for i in range(numberOfEpochs):
             self.error = 0
             for set in data:
@@ -99,8 +129,8 @@ class NeuralNetwork:
                 self.forwardPropagation(input_data)
                 # print(expected_output)
                 # print(output_last_layer)
-                self.error += (np.power(LA.norm(np.subtract(expected_output, output_last_layer)), 2)/len(data))
-            #In the tests this has to be skipped
+                self.error += (np.power(LA.norm(np.subtract(expected_output, output_last_layer)), 2) / len(data))
+            # In the tests this has to be skipped
             if test_data is not None:
                 x = self.getGuessRatio(test_data)
                 self.precisionY.append(x)
@@ -108,8 +138,8 @@ class NeuralNetwork:
                 self.error_plotX.append(i)
                 self.error_plotY.append(self.error)
 
-            # error = expected_output - output_last_layer
-            # delta = error * (output_last_layer * (1.0 - output_last_layer))
+                # error = expected_output - output_last_layer
+                # delta = error * (output_last_layer * (1.0 - output_last_layer))
 
     def plotErrorData(self):
         plt.figure()
@@ -129,10 +159,9 @@ class NeuralNetwork:
         correct_guesses = 0
         for data in test_data:
             guess = self.interp(self.feed(data[0:len(data)]))
-            if guess == data[len(data)-1]:
+            if guess == data[len(data) - 1]:
                 correct_guesses += 1
-        return correct_guesses/total
-
+        return correct_guesses / total
 
     def interp(self, output):
         index = -1
@@ -147,3 +176,17 @@ class NeuralNetwork:
         resp[index] = 1
         return resp
 
+    def load_network(self, serialize_network):
+        """
+        From a numpy array the layers, weight and bias are created.
+        """
+        layer = self.first_layer
+        current_index = 0
+        for i in range(self.number_of_layers):
+            for neuron in layer.neuron_array:
+                number_of_weights = len(neuron.weights)
+                neuron.weights = serialize_network[current_index: number_of_weights + 1]
+                neuron.bias = serialize_network[number_of_weights + 1]
+                current_index += number_of_weights + 2
+            if i != self.number_of_layers - 1:
+                layer = layer.next_layer
