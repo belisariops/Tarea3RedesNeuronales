@@ -34,16 +34,23 @@ class GeneticFixedTopology(AbstractGeneticAlgorithm):
         Execute the genetic algorithm to find the best weights and bias
         for fixed neural network.
         """
-        self.initialize_population(self.initial_population)
+        self.initialize_population(self.population_size)
         while self.error > self.expected_error:
             self.generation += 1
-            self.selection()
+            child_population = []
+            while child_population < self.population_size:
+                father = self.selection()
+                mother = self.selection()
+                first_child, second_child = self.cross_over(father, mother)
+                self.mutate(first_child)
+                self.mutate(second_child)
+                if self.evaluate_fitness(first_child) > self.evaluate_fitness(second_child):
+                    child_population.append(first_child)
+                else:
+                    child_population.append(second_child)
+            self.population = child_population
 
-    def reproduction(self):
-        """
-        Reproduce the population.
-        """
-        pass
+        return self.get_best_neural_network()
 
     def create_random_bias(self):
         return random.uniform(1.0, 3.0)
@@ -60,6 +67,8 @@ class GeneticFixedTopology(AbstractGeneticAlgorithm):
         for num_neurons in self.neurons_per_layer:
             self.number_genes += (num_neurons*num_inputs + 1)
 
+        super().initialize_population()
+
         # for i in range(number_of_individuals):
         #     layer = []
         #     num_inputs = self.num_inputs
@@ -69,11 +78,6 @@ class GeneticFixedTopology(AbstractGeneticAlgorithm):
         #         layer.append(self.create_random_bias())
         #     self.population.append(layer)
 
-    def selection(self):
-        """
-        Select a fixed number of suitable candidates.
-        """
-        pass
 
     def evaluate_fitness(self, individual):
         """
@@ -89,3 +93,13 @@ class GeneticFixedTopology(AbstractGeneticAlgorithm):
             if correct_result == guess_result:
                 fitness += 1
         return fitness
+
+    def get_best_neural_network(self):
+        best_individual = self.population[0]
+        best_fitness = self.evaluate_fitness(best_individual)
+        for serialized_netowrk in self.population:
+            individual_fitness = self.evaluate_fitness(serialized_netowrk)
+            if (best_fitness < individual_fitness):
+                best_individual = serialized_netowrk
+                best_fitness = individual_fitness
+        return self.neural_network.load_network(best_individual)
