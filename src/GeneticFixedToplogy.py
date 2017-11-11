@@ -66,7 +66,8 @@ class GeneticFixedTopology(AbstractGeneticAlgorithm):
         but different weights and bias.
         """
         num_inputs = self.num_inputs
-        for num_neurons in self.neurons_per_layer:
+        self.number_genes = num_inputs*2
+        for num_neurons in self.neurons_per_layer[1:]:
             self.number_genes += ((num_neurons + 1) * num_inputs)
 
         super().initialize_population(number_of_individuals)
