@@ -178,15 +178,15 @@ class NeuralNetwork:
 
     def load_network(self, serialize_network):
         """
-        From a numpy array the layers, weight and bias are created.
+        From an array the layers, weight and bias are created.
         """
         layer = self.first_layer
         current_index = 0
         for i in range(self.number_of_layers):
             for neuron in layer.neuron_array:
                 number_of_weights = len(neuron.weights)
-                neuron.weights = serialize_network[current_index: number_of_weights + 1]
-                neuron.bias = serialize_network[number_of_weights + 1]
-                current_index += number_of_weights + 2
+                neuron.weights = serialize_network[current_index: number_of_weights]
+                neuron.bias = serialize_network[current_index + number_of_weights]
+                current_index += number_of_weights + 1
             if i != self.number_of_layers - 1:
                 layer = layer.next_layer

@@ -1,11 +1,11 @@
 import unittest
 
-from FileManager import normalize, FileManager
-from FirstNeuralLayer import FirstNeuralLayer
-from LastNeuralLayer import LastNeuralLayer
-from NeuralNetwork import NeuralNetwork
-from Parser import Parser
-from SigmoidNeuron import SigmoidNeuron
+from src.FileManager import normalize, FileManager
+from src.FirstNeuralLayer import FirstNeuralLayer
+from src.LastNeuralLayer import LastNeuralLayer
+from src.NeuralNetwork import NeuralNetwork
+from src.Parser import Parser
+from src.SigmoidNeuron import SigmoidNeuron
 
 
 class MyTestCase(unittest.TestCase):

@@ -10,4 +10,4 @@ class Timer:
         self.start_time = self.timer.now()
 
     def stop(self):
-        return ( self.timer.now() - self.start_time).total_seconds()
+        return (self.timer.now() - self.start_time).total_seconds()

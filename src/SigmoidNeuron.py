@@ -2,7 +2,7 @@ import random
 
 from math import exp
 
-from AbstractNeuron import AbstractNeuron
+from src.AbstractNeuron import AbstractNeuron
 
 
 class SigmoidNeuron(AbstractNeuron):

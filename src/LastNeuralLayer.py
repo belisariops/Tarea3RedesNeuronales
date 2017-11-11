@@ -1,4 +1,4 @@
-from AbstractNeuralLayer import AbstractNeuralLayer
+from src.AbstractNeuralLayer import AbstractNeuralLayer
 
 
 class LastNeuralLayer(AbstractNeuralLayer):

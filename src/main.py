@@ -1,9 +1,9 @@
 import matplotlib.pylab as plt
 import numpy as np
 
-from FileManager import FileManager
-from NeuralNetwork import NeuralNetwork
-from Timer import Timer
+from src.FileManager import FileManager
+from src.NeuralNetwork import NeuralNetwork
+from src.Timer import Timer
 from random import shuffle
 
 from src.GeneticFixedToplogy import GeneticFixedTopology
@@ -15,17 +15,16 @@ def main():
     file_manager.load_file("../Datasets/iris.data")
     train_data = file_manager.get_train_data()
     test_data = file_manager.get_test_data()
-    print(train_data)
     number_of_epochs = 2000
-
     # Training data can be shuffled
     # shuffle(train_data)
 
 
-    genetic = GeneticFixedTopology(100, 0.8)
+    genetic = GeneticFixedTopology(10, 0.95)
+    genetic.run()
 
     # Train and Plot results of the dataset
-    dataset_prediction(train_data, test_data, number_of_epochs)
+    # dataset_prediction(train_data, test_data, number_of_epochs)
 
     # Plot Hidden Layers v/s Precision Rate
     # plot_hidden_layers_vs_precision_rate(train_data,test_data)
@@ -53,7 +52,6 @@ def dataset_prediction(train_data, test_data, number_of_epochs):
 
     # Assert Ratio
     print("Test data ratio: {0}".format(neural_network.getGuessRatio(test_data)))
-    print(neural_network.feed(test_data[0]))
     # Plot Data Info
     neural_network.plotErrorData()
 

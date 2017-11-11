@@ -1,8 +1,8 @@
 import unittest
-from FirstNeuralLayer import FirstNeuralLayer
-from LastNeuralLayer import LastNeuralLayer
-from NeuralNetwork import NeuralNetwork
-from SigmoidNeuron import SigmoidNeuron
+from src.FirstNeuralLayer import FirstNeuralLayer
+from src.LastNeuralLayer import LastNeuralLayer
+from src.NeuralNetwork import NeuralNetwork
+from src.SigmoidNeuron import SigmoidNeuron
 
 
 class MyTestCase(unittest.TestCase):
