@@ -26,7 +26,7 @@ def main():
     #genetic = GeneticFixedTopology(100, 1000)
     #best_neural_network = genetic.run()
     #genetic.plot_results()
-    plot_genetic_algorithm_time()
+    #plot_genetic_algorithm_time()
     # -------------------------------------------------
 
     # Train and Plot results of the dataset
@@ -36,7 +36,7 @@ def main():
     # plot_hidden_layers_vs_precision_rate(train_data,test_data)
 
     # Plot mean time of 1000 epochs
-    # plot_time_vs_epochs(train_data,test_data)
+    plot_time_vs_epochs(train_data,test_data)
 
     # Plot learning rate v/s precision
     # plot_learning_rate_vs_precision(train_data,test_data)
@@ -109,7 +109,7 @@ def plot_time_vs_epochs(train_data, test_data):
     plt.figure()
     plt.title("Time Taken in 1000 Epochs", fontsize=20)
     plt.xlabel('Number of Experiment')
-    plt.ylabel('Time')
+    plt.ylabel('Time (seconds)')
     plt.scatter(number_epochs, time, color='blue')
     plt.axhline(y=mean_time, color='r', linestyle='-')
     plt.show()

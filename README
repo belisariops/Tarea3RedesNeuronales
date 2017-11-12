@@ -2,6 +2,8 @@
     using Python 3.6 excecute "python main.py" in the src directory, tests can be run with "python -m unittest discover -s Tests"
      in the parent directory, some OS may have a problem with the working directory, an IDE is recommended.
     
+# Libraries:
+    Matplotlib
 
 #Repository:
     https://github.com/belisariops/Tarea3RedesNeuronales
