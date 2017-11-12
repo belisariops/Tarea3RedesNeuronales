@@ -161,7 +161,7 @@ class NeuralNetwork:
             guess = self.interp(self.feed(data[0:len(data)]))
             if guess == data[len(data) - 1]:
                 correct_guesses += 1
-        return correct_guesses / total
+        return correct_guesses
 
     def interp(self, output):
         index = -1

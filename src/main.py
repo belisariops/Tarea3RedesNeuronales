@@ -19,9 +19,15 @@ def main():
     # Training data can be shuffled
     # shuffle(train_data)
 
-
-    genetic = GeneticFixedTopology(10, 0.95)
-    genetic.run()
+    """
+    Genetic Algorithm (Tarea 3)
+    """
+    # -------------------------------------------------
+    #genetic = GeneticFixedTopology(100, 1000)
+    #best_neural_network = genetic.run()
+    #genetic.plot_results()
+    plot_genetic_algorithm_time()
+    # -------------------------------------------------
 
     # Train and Plot results of the dataset
     # dataset_prediction(train_data, test_data, number_of_epochs)
@@ -137,6 +143,35 @@ def getPrecision(neural_network, test_data):
     precision = correct_guesses / total
 
     return precision
+
+
+def plot_genetic_algorithm_time():
+    timer = Timer()
+    experiments = []
+    time = []
+    total_time = 0
+    # Build Neural Network
+    genetic_algorithm = GeneticFixedTopology(100, 1000)
+
+    # 20 runs of 1000 generations each
+    for i in range(20):
+        experiments.append(i)
+        timer.start()
+        genetic_algorithm.run()
+        this_time = timer.stop()
+        time.append(this_time)
+        genetic_algorithm = GeneticFixedTopology(100, 1000)
+        total_time += this_time
+    mean_time = total_time / len(experiments)
+
+    # Plot
+    plt.figure()
+    plt.title("Time Taken in 1000 Generations", fontsize=20)
+    plt.xlabel('experimento')
+    plt.ylabel('tiempo (segundos)')
+    plt.scatter(experiments, time, color='blue')
+    plt.axhline(y=mean_time, color='r', linestyle='-')
+    plt.show()
 
 
 if __name__ == '__main__':

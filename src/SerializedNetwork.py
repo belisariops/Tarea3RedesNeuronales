@@ -1,4 +1,4 @@
 class SerializeNetwork:
     def __init__(self):
-        self.number_of_neurons_per_layer = []
+        self.fitness = None
         self.serialized_values = []
