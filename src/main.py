@@ -23,9 +23,9 @@ def main():
     Genetic Algorithm (Tarea 3)
     """
     # -------------------------------------------------
-    #genetic = GeneticFixedTopology(100, 1000)
-    #best_neural_network = genetic.run()
-    #genetic.plot_results()
+    genetic = GeneticFixedTopology(100, 1000)
+    best_neural_network = genetic.run()
+    genetic.plot_results()
     #plot_genetic_algorithm_time()
     # -------------------------------------------------
 
@@ -36,7 +36,7 @@ def main():
     # plot_hidden_layers_vs_precision_rate(train_data,test_data)
 
     # Plot mean time of 1000 epochs
-    plot_time_vs_epochs(train_data,test_data)
+    # plot_time_vs_epochs(train_data,test_data)
 
     # Plot learning rate v/s precision
     # plot_learning_rate_vs_precision(train_data,test_data)
